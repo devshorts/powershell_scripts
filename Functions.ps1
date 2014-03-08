@@ -102,7 +102,21 @@ function fuckit {
 # ============================
 
 function projects{ cd \Projects }
-
+function dl { cd $HOME\Downloads }
+function dtop { cd $HOME\Desktop }
+function prog { cd "C:\Program Files" }
+function prog86 { cd "C:\Program Files (x86)"}
+function top {
+    Param(
+        $count = 30,
+        $seconds = 1
+    )
+    While(1) {
+        ps | sort -des cpu | select -f $count | ft -a; 
+        sleep $seconds; 
+        cls
+    }
+}
 # == ALIASES ==
 
 Set-Alias bd BackOneDir
