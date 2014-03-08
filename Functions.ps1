@@ -1,3 +1,7 @@
+# ============================
+# Clipboard manangment
+# ============================
+
 function Get-ClipBoard {
     Add-Type -AssemblyName System.Windows.Forms
     $tb = New-Object System.Windows.Forms.TextBox
@@ -19,6 +23,10 @@ function Set-ClipBoard() {
     $tb.SelectAll()
     $tb.Copy()
 }
+
+# ============================
+# FORWARD AND BACK DIRECTORIES
+# ============================
 
 # keeps track of a global stack when you cd and lets you pop back
 [System.Collections.Stack]$GLOBAL:dirStack = @()
@@ -65,8 +73,6 @@ function TraceDirectoryStack{
     }
 }
 
-function projects{ cd \Projects }
-
 function tdir{
     TraceDirectoryStack -stack $GLOBAL:dirStack
 }
@@ -75,6 +81,26 @@ function bdir{
     TraceDirectoryStack -stack $GLOBAL:forwardStack
 }
 
+
+# ============================
+# quick directory changes
+# ============================
+
+function projects{ cd \Projects }
+
+# == ALIASES ==
+
 Set-Alias bd BackOneDir
 Set-Alias fd ForwardOneDir
 Set-Alias clipc Set-ClipBoard
+Set-Alias subl "C:\Program Files\Sublime Text 2\sublime_text.exe"
+
+# ==================
+# Colorized LS
+# ==================
+
+Set-Alias ls Get-ChildItemColor -force -option allscope
+function fuckit {
+    git commit -m "quick commit" 
+    git push
+}
