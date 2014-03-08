@@ -101,6 +101,13 @@ Set-Alias subl "C:\Program Files\Sublime Text 2\sublime_text.exe"
 
 Set-Alias ls Get-ChildItemColor -force -option allscope
 function fuckit {
-    git commit -m "quick commit" 
+    Param($m)
+    $message = $m
+    if($message -eq $null){
+        $message = "quick commit"
+    }
+
+    git add .
+    git commit -m $message
     git push
 }
