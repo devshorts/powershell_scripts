@@ -24,6 +24,21 @@ function Set-ClipBoard() {
     $tb.Copy()
 }
 
+#=============================
+# Path utils
+#=============================
+function pathExists(){
+
+    Param(
+        [parameter(
+            mandatory=$true,
+            position=0
+            #parametersetname="BarSet"
+        )]
+        $contains)
+    ($env:Path).Split(';') | where { $_.Contains($contains) }
+}
+
 # ============================
 # FORWARD AND BACK DIRECTORIES
 # ============================
