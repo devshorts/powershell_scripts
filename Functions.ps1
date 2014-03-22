@@ -132,6 +132,7 @@ function top {
         cls
     }
 }
+
 # == ALIASES ==
 
 Set-Alias bd BackOneDir
