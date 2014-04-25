@@ -5,8 +5,7 @@ function publishSln{
 	        )]
           $SolutionFile,
 	     
-        $ProfilePath,
-	$Config
+        $ProfilePath
       )
 
       if($ProfilePath -eq $null){
@@ -17,11 +16,7 @@ function publishSln{
         $SolutionFile = (Get-ChildItem -Filter "*.sln").Name
       }
 
-      if($Config -eq $null){
-	$Config = "Debug"
-      }	
-
-      msbuild $SolutionFile /p:DeployOnBuild=true /p:PublishProfile=$ProfilePath /p:VisualStudioVersion=11.0  /p:Configuration=$Config
+      msbuild $SolutionFile /p:DeployOnBuild=true /p:PublishProfile=$ProfilePath /p:VisualStudioVersion=11.0 
 }
 
 Set-Alias msbuild "c:\windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe"
