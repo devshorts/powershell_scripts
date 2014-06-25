@@ -22,9 +22,13 @@ function delete-branch(){
 
     git push origin :$name
 
-    echo "deleted remote"
+    echo "deleted remote " $name
 
     git branch -d $name
 
-    echo "delete local"
+    echo "delete local " $name
+}
+
+function git-add-all(){
+	git add --all .
 }

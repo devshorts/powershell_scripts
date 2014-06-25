@@ -51,16 +51,25 @@ $GLOBAL:addToStack = $true
 
 # overload the prompt function to hook into the CD command
 # this way when the directory changes that prompt displayss
-function prompt
+function CapturePromptChange
 {
-    Write-Host "PS $(get-location)>"  -NoNewLine -foregroundcolor Green
-    $GLOBAL:nowPath = (Get-Location).Path
-    if(($nowPath -ne $oldDir) -AND $GLOBAL:addToStack){
+    #Write-Host "PS $(get-location)>"  -NoNewLine -foregroundcolor Green
+
+    $now = (Get-Location).Path
+
+    if(($now -ne $oldDir) -AND $GLOBAL:addToStack){
         $GLOBAL:dirStack.Push($oldDir)
-        $GLOBAL:oldDir = $nowPath
+        $GLOBAL:oldDir = $now
     }
     $GLOBAL:AddToStack = $true
-    return ' '
+}
+
+function prompt(){
+    Write-Host "PS $(get-location)>"  -NoNewLine -foregroundcolor Green
+
+    $GLOBAL:nowPath = (Get-Location).Path
+
+    CapturePromptChange    
 }
 
 function BackOneDir{
@@ -139,6 +148,7 @@ Set-Alias bd BackOneDir
 Set-Alias fd ForwardOneDir
 Set-Alias clipc Set-ClipBoard
 Set-Alias subl "C:\Program Files\Sublime Text 2\sublime_text.exe"
+New-Alias which get-command
 
 # ==================
 # Colorized LS
