@@ -2,6 +2,8 @@
 # Clipboard manangment
 # ============================
 
+Write-Host "loading custom functions" 
+
 function Get-ClipBoard {
     Add-Type -AssemblyName System.Windows.Forms
     $tb = New-Object System.Windows.Forms.TextBox
@@ -49,6 +51,24 @@ function pathExists(){
 $GLOBAL:oldDir = ''
 $GLOBAL:addToStack = $true
 
+$MAX_PATH = 5
+
+function ShortPwd
+{
+    $finalPath = $pwd
+    $paths = $finalPath.Path.Split('\')
+
+    if($paths.Length -gt $MAX_PATH){
+        $start = $paths.Length - $MAX_PATH
+        $finalPath = ".."
+        for($i = $start; $i -le $paths.Length; $i++){
+            $finalPath = $finalPath + "\" + $paths[$i]
+        }
+    }
+
+    return $finalPath
+}
+
 # overload the prompt function to hook into the CD command
 # this way when the directory changes that prompt displayss
 function CapturePromptChange
@@ -65,11 +85,13 @@ function CapturePromptChange
 }
 
 function prompt(){
-    Write-Host "PS $(get-location)>"  -NoNewLine -foregroundcolor Green
+    Write-Host $pwd  -NoNewLine -foregroundcolor Green
 
     $GLOBAL:nowPath = (Get-Location).Path
 
-    CapturePromptChange    
+    CapturePromptChange
+
+    return "> "    
 }
 
 function BackOneDir{
