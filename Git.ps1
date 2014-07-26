@@ -9,6 +9,28 @@ function create-branch(){
     git push -u origin $name
 }
 
+function delete-local-merged{
+  $command = "git branch --merged | grep -v -E '\\*|develop|master'"
+
+  echo "Will delete:"
+
+  iex $command
+
+  $response = Read-Host "continue? y/n"
+
+  if($response -eq "y"){
+    $command = $command + " | xargs git branch -D"
+
+    iex $command 
+    
+    echo ""
+    echo "--- current branches -- "
+    echo ""
+
+    iex "git branch"
+  }
+}
+
 function delete-branch(){
     Param(
           [parameter(
