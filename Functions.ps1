@@ -82,6 +82,8 @@ function CapturePromptChange
         $GLOBAL:oldDir = $now
     }
     $GLOBAL:AddToStack = $true
+
+    & "$env:ConEmuBaseDir\ConEmuC.exe" "/GUIMACRO", 'Rename(0,@"'$(Get-Location)'")' > $null
 }
 
 function prompt(){
