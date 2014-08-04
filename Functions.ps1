@@ -144,6 +144,14 @@ function fuckit {
 }
 
 # ============================
+# Open utils
+# ============================
+
+function open{
+    explorer .
+}
+
+# ============================
 # quick directory changes
 # ============================
 
@@ -170,6 +178,7 @@ Set-Alias bd BackOneDir
 Set-Alias fd ForwardOneDir
 Set-Alias clipc Set-ClipBoard
 Set-Alias subl "C:\Program Files\Sublime Text 2\sublime_text.exe"
+Set-Alias e subl
 New-Alias which get-command
 
 # ==================
