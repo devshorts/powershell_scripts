@@ -2,8 +2,6 @@
 # Clipboard manangment
 # ============================
 
-Write-Host "loading custom functions" 
-
 function Get-ClipBoard {
     Add-Type -AssemblyName System.Windows.Forms
     $tb = New-Object System.Windows.Forms.TextBox
@@ -69,9 +67,13 @@ function ShortPwd
     return $finalPath
 }
 
+function global:PromptPwdProvider{
+    (ShortPwd)
+}
+
 # overload the prompt function to hook into the CD command
 # this way when the directory changes that prompt displayss
-function CapturePromptChange
+function CustomPromptHook
 {
     #Write-Host "PS $(get-location)>"  -NoNewLine -foregroundcolor Green
 
@@ -83,18 +85,12 @@ function CapturePromptChange
     }
     $GLOBAL:AddToStack = $true
 
-    & "$env:ConEmuBaseDir\ConEmuC.exe" "/GUIMACRO", 'Rename(0,@"'$(Get-Location)'")' > $null
+    & "$env:ConEmuBaseDir\ConEmuC.exe" "/GUIMACRO", 'Rename(0,@"'$(Get-Location) --console--'")' > $null
 }
 
-function prompt(){
-    Write-Host $pwd  -NoNewLine -foregroundcolor Green
 
-    $GLOBAL:nowPath = (Get-Location).Path
-
-    CapturePromptChange
-
-    return "> "    
-}
+$global:PromptSettings.End += ${function:CustomPromptHook}
+$global:PromptSettings.PwdProvider = ${function:ShortPwd}
 
 function BackOneDir{
     if($GLOBAL:dirStack.Count -gt 0){
