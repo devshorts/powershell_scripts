@@ -12,7 +12,6 @@ function Get-ClipBoard {
     $tb.Text
 }
 
-
 function Set-ClipBoard() {
     Param(
       [Parameter(ValueFromPipeline=$true)]
@@ -151,6 +150,7 @@ function fuckit {
 
 function projects{ cd \Projects }
 function dl { cd $HOME\Downloads }
+function paradox { cd \Projects\paradox }
 function dtop { cd $HOME\Desktop }
 function prog { cd "C:\Program Files" }
 function prog86 { cd "C:\Program Files (x86)"}
@@ -168,11 +168,25 @@ function top {
 
 # == ALIASES ==
 
+Set-Alias dm docker-machine
 Set-Alias bd BackOneDir
 Set-Alias fd ForwardOneDir
 Set-Alias clipc Set-ClipBoard
 Set-Alias subl "C:\Program Files\Sublime Text 2\sublime_text.exe"
 New-Alias which get-command
+set-alias e subl
+
+function dmenv(){
+    & "C:\Program Files\Docker Toolbox\docker-machine.exe" env default | Invoke-Expression
+}
+
+
+
+# Load posh-git example profile
+. 'C:\source\posh-git\profile.example.ps1'
+
+import-module posh-docker
+
 
 # ==================
 # Colorized LS

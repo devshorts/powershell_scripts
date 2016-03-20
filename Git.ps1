@@ -51,6 +51,10 @@ function delete-branch(){
     echo "delete local " $name
 }
 
+function push (){
+  git push
+}
+
 function git-add-all(){
 	git add --all .
 }
